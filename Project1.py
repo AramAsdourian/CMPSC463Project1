@@ -8,6 +8,7 @@
 # Algorithmic Time‑Series Segmentation and Condition Analysis Using Water Pump RUL Dataset
 ################################################################################
 import random
+import sys
 
 ###############################Importing Dataset################################
 
@@ -247,7 +248,7 @@ for sensor in headers[2:-1]:
     elif max([ExLow, ModLow, ModHigh, ExHigh]) == ExHigh:
         SubsetClass[sensor] = [(start,end),"Extremely High RUL"]
 
-print("\nDominant clas of each max subset:")
+
 print("\nSensor, max subset range, dominant class:")
 for sensor in list(SubsetClass.items())[:3]:
     print(sensor[0], sensor[1][0], sensor[1][1])
@@ -255,3 +256,20 @@ print("...")
 for sensor in list(SubsetClass.items())[-3:]:
     print(sensor[0], sensor[1][0], sensor[1][1])
 ################################################################################
+
+print("\n\n")
+userInput = -1
+while userInput != '0':
+    userInput = input("Enter 1 to print full segment data, 2 to print full subset data, or 0 to exit.")
+    if userInput == '1':
+        print("Timeseries, segments, RUL class: ")
+        for i in list((dataset['row'].keys())):
+            print(i, segmentComplexity[i], dataset['column']['condition'][int(i)])
+    elif userInput == '2':
+        print("\nSensor, max subset range, dominant class:")
+        for sensor in list(SubsetClass.items()):
+            print(sensor[0], sensor[1][0], sensor[1][1])
+    elif userInput == '0':
+        sys.exit()
+    else:
+        print("\nInvalid input, try again. ")
